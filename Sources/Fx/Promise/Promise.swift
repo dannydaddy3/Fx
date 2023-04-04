@@ -59,6 +59,12 @@ public final class Promise<A>: PromiseType {
 		return self
 	}
 
+	public func cancel() {
+		callbacks.modify { callbacks in
+			callbacks.removeAll()
+		}
+	}
+
 	private func runCallbacks() {
 		guard let result = self.result else {
 			return assert(false, "Can only run callbacks on a completed promise")
