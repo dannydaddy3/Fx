@@ -60,7 +60,9 @@ public final class Promise<A>: PromiseType {
 	}
 	
 	public func cancel() {
-		callbacks.removeAll()
+		callbacks.modify { callbacks in
+			callbacks.removeAll()
+		}
 	}
 
 	private func runCallbacks() {
