@@ -58,6 +58,10 @@ public final class Promise<A>: PromiseType {
 
 		return self
 	}
+	
+	public func cancel() {
+		callbacks.removeAll()
+	}
 
 	private func runCallbacks() {
 		guard let result = self.result else {
