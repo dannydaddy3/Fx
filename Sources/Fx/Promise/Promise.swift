@@ -21,8 +21,8 @@ public final class Promise<A>: PromiseType {
 		didSet { runCallbacks() }
 	}
 
-	private let callbackExecutionSemaphore = DispatchSemaphore(value: 1)
-	private let callbacks = Atomic<[(Result<A, Error>) -> Void]>([])
+	public var callbackExecutionSemaphore = DispatchSemaphore(value: 1)
+	public var callbacks = Atomic<[(Result<A, Error>) -> Void]>([])
 
 	public init(result: Result<A, Error>) {
 		self.result = result
@@ -65,7 +65,7 @@ public final class Promise<A>: PromiseType {
 		}
 	}
 
-	private func runCallbacks() {
+	public func runCallbacks() {
 		guard let result = self.result else {
 			return assert(false, "Can only run callbacks on a completed promise")
 		}
